@@ -16,6 +16,7 @@ iterator.
 
 You'll edit this file in Tasks 3a and 3c.
 """
+import itertools
 import operator
 
 
@@ -38,6 +39,7 @@ class AttributeFilter:
     Concrete subclasses can override the `get` classmethod to provide custom
     behavior to fetch a desired attribute from the given `CloseApproach`.
     """
+
     def __init__(self, op, value):
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
@@ -108,8 +110,41 @@ def create_filters(
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
-    return ()
+    filters = []
+    if diameter_min:
+        dia_min = DiameterFilter(operator.ge, diameter_min)
+        filters.append(dia_min)
+    if diameter_max:
+        dia_max = DiameterFilter(operator.le, diameter_max)
+        filters.append(dia_max)
+    if date:
+        date_fix = DateFilter(operator.eq, date)
+        filters.append(date_fix)
+    if start_date:
+        date_start = DateFilter(operator.ge, start_date)
+        filters.append(date_start)
+    if end_date:
+        date_end = DateFilter(operator.le, end_date)
+        filters.append(date_end)
+    if distance_min:
+        dist_min = DistanceFilter(operator.ge, distance_min)
+        filters.append(dist_min)
+    if distance_max:
+        dist_max = DistanceFilter(operator.le, distance_max)
+        filters.append(dist_max)
+    if velocity_min:
+        vel_min = VelocityFilter(operator.ge, velocity_min)
+        filters.append(vel_min)
+    if velocity_max:
+        vel_max = VelocityFilter(operator.le, velocity_max)
+        filters.append(vel_max)
+    if hazardous == True:
+        is_hzds = HazardousFilter(operator.eq, True)
+        filters.append(is_hzds)
+    elif hazardous == False:
+        is_not_hzds = HazardousFilter(operator.eq, False)
+        filters.append(is_not_hzds)
+    return filters
 
 
 def limit(iterator, n=None):
@@ -121,5 +156,40 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    # TODO: Produce at most `n` values from the given iterator.
-    return iterator
+    if n:
+        if n > 0:
+            return itertools.islice(iterator, n)
+        elif n == 0:
+            return iterator
+    else:
+        return iterator
+
+
+class VelocityFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.velocity
+
+
+class DistanceFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.distance
+
+
+class DateFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.time.date()
+
+
+class DiameterFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.diameter
+
+
+class HazardousFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach):
+        return approach.neo.hazardous

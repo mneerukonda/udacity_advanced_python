@@ -71,6 +71,7 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
+        """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
@@ -166,30 +167,65 @@ def limit(iterator, n=None):
 
 
 class VelocityFilter(AttributeFilter):
+    """VelocityFilter is a subclass of AttributeFilter.
+
+    VelocityFilter subclass is used as part of Filters collection which is used when we need to filter the
+    CloseApproach collection based on user input velocity.
+    """
+
     @classmethod
     def get(cls, approach):
+        """Return velocity value from the CloseApproach input instance."""
         return approach.velocity
 
 
 class DistanceFilter(AttributeFilter):
+    """DistanceFilter is a subclass of AttributeFilter.
+
+    DistanceFilter subclass is used as part of Filters collection which is used when we need to filter the
+    CloseApproach collection based on user input distance.
+    """
+
     @classmethod
     def get(cls, approach):
+        """Return distance value from the CloseApproach input instance."""
         return approach.distance
 
 
 class DateFilter(AttributeFilter):
+    """DateFilter is a subclass of AttributeFilter.
+
+    DateFilter subclass is used as part of Filters collection which is used when we need to filter the
+    CloseApproach collection based on user input date.
+    """
+
     @classmethod
     def get(cls, approach):
+        """Return time value from the CloseApproach input instance."""
         return approach.time.date()
 
 
 class DiameterFilter(AttributeFilter):
+    """DiameterFilter is a subclass of AttributeFilter.
+
+    DiameterFilter subclass is used as part of Filters collection which is used when we need to filter the
+    NearEarthObject collection based on user input diameter.
+    """
+
     @classmethod
     def get(cls, approach):
+        """Return diameter value from the CloseApproach's NearEarthObject input instance."""
         return approach.neo.diameter
 
 
 class HazardousFilter(AttributeFilter):
+    """HazardousFilter is a subclass of AttributeFilter.
+
+    HazardousFilter subclass is used as part of Filters collection which is used when we need to filter the
+    NearEarthObject collection based on user supplied Hazardous filter.
+    """
+
     @classmethod
     def get(cls, approach):
+        """Return if the CloseApproach's NearEarthObject input instance is hazardous or not."""
         return approach.neo.hazardous

@@ -44,11 +44,10 @@ import shlex
 import sys
 import time
 
-from extract import load_neos, load_approaches
 from database import NEODatabase
+from extract import load_neos, load_approaches
 from filters import create_filters, limit
 from write import write_to_csv, write_to_json
-
 
 # Paths to the root of the project and the `data` subfolder.
 PROJECT_ROOT = pathlib.Path(__file__).parent.resolve()
@@ -246,6 +245,7 @@ class NEOShell(cmd.Cmd):
     inspect and query commands, while only loading the data (which can be quite
     slow) once.
     """
+
     intro = ("Explore close approaches of near-Earth objects. "
              "Type `help` or `?` to list commands and `exit` to exit.\n")
     prompt = '(neo) '

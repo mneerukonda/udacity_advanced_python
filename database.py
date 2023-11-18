@@ -13,6 +13,7 @@ You'll edit this file in Tasks 2 and 3.
 """
 from models import NearEarthObject, CloseApproach
 
+
 class NEODatabase:
     """A database of near-Earth objects and their close approaches.
 
@@ -21,7 +22,8 @@ class NEODatabase:
     help fetch NEOs by primary designation or by name and to help speed up
     querying for close approaches that match criteria.
     """
-    def __init__(self, neos:NearEarthObject, approaches:CloseApproach):
+
+    def __init__(self, neos: NearEarthObject, approaches: CloseApproach):
         """Create a new `NEODatabase`.
 
         As a precondition, this constructor assumes that the collections of NEOs

@@ -69,6 +69,7 @@ class NearEarthObject:
                f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
 
     def serialize(self):
+        """Return dict format of a few attributes of NearEarthObjects which are useful to write into json/csv file."""
         return {'designation': self.designation, 'name': self.name, 'diameter_km': self.diameter,
                 'potentially_hazardous': self.hazardous}
 
@@ -129,6 +130,7 @@ class CloseApproach:
 
     @property
     def fullname(self):
+        """Return designation as part of fullname property."""
         return f"{self._designation}"
 
     def __str__(self):
@@ -144,4 +146,6 @@ class CloseApproach:
                f"velocity={self.velocity:.2f}, neo={self.neo!r})"
 
     def serialize(self):
-        return {'datetime_utc': self.time_str, 'distance_au': self.distance, 'velocity_km_s': self.velocity, 'neo': self.neo.serialize()}
+        """Return dict format of a few attributes of CloseApproach which are useful to write into json/csv files."""
+        return {'datetime_utc': self.time_str, 'distance_au': self.distance, 'velocity_km_s': self.velocity,
+                'neo': self.neo.serialize()}

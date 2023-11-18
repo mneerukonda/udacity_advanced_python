@@ -39,6 +39,7 @@ def write_to_csv(results, filename):
 
 
 def convert_datetime(ca_time):
+    """Return isoformat of the input time."""
     return ca_time.isoformat()
 
 

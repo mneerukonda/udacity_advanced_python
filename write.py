@@ -29,13 +29,13 @@ def write_to_csv(results, filename):
         'designation', 'name', 'diameter_km', 'potentially_hazardous'
     )
     with open(filename, mode='w') as out_file:
-        writer = csv.writer(out_file)
-        writer.writerow(fieldnames)
+        writer = csv.DictWriter(out_file, fieldnames=fieldnames)
+        writer.writeheader()
         if results:
             for ca in results:
-                writer.writerow(
-                    [ca.time, ca.distance, ca.velocity, ca.neo.designation, ca.neo.name, ca.neo.diameter,
-                     ca.neo.hazardous])
+                ca_dict = ca.serialize()
+                neo_dict = ca_dict.pop('neo')
+                writer.writerow({**ca_dict, **neo_dict})
 
 
 def convert_datetime(ca_time):

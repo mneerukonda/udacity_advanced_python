@@ -157,11 +157,8 @@ def limit(iterator, n=None):
     :param n: The maximum number of values to produce.
     :yield: The first (at most) `n` values from the iterator.
     """
-    if n:
-        if n > 0:
-            return itertools.islice(iterator, n)
-        elif n == 0:
-            return iterator
+    if n and n > 0:
+        return itertools.islice(iterator, n)
     else:
         return iterator
 

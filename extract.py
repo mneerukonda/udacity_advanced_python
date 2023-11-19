@@ -26,15 +26,10 @@ def load_neos(neo_csv_path):
     """
     data_list = []
     with open(neo_csv_path, 'r') as cfile:
-        data = csv.reader(cfile)
-        header = next(data)
+        data = csv.DictReader(cfile)
         for row in data:
-            row_dict = {}
-            for i, val in enumerate(row):
-                row_dict[header[i]] = val
-            neo = NearEarthObject(**row_dict)
+            neo = NearEarthObject(**row)
             data_list.append(neo)
-
     return data_list
 
 
